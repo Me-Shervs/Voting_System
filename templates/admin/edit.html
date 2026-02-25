@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Candidate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="../static/css/edit_candidates.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="logo">
+            <h2>Voting System</h2>
+        </div>
+    </div>
+
+    <div class="sidebar"> 
+        <ul>
+            {% if 'admin' in session %}
+                <li>
+                    <a href="{{ url_for('dashboard') }}">
+                        <i class="fas fa-th-large"></i>
+                        <div>Dashboard</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_votes') }}">
+                        <i class="fa-solid fa-check-to-slot"></i>
+                        <div>Votes</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('manage_candidates') }}">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <div>Candidates</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_settings') }}">
+                        <i class="fas fa-cog"></i>
+                        <div>Admin Settings</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_logout') }}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <div>Logout</div>
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_login') }}">Admin Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="main">
+        <h1>Edit Candidate</h1>
+        <div class="edit-container">
+            <form method="POST" enctype="multipart/form-data" class="edit-form"> <!-- Must add enctype! -->
+                
+                {% if candidate.image_url %}
+                <div class="preview-image">
+                    <img src="{{ url_for('static', filename=candidate.image_url) }}" alt="{{ candidate.name }}" width="100">
+                </div>
+                {% else %}
+                <p>No image available.</p>
+                {% endif %}
+
+                <div class="upload-container">
+                    <input type="file" name="image_url" id="image_url" class="image-url">
+                    <label for="image_url"><i class="fa-solid fa-upload"></i>Upload File</label>
+                </div>
+
+                <div class="text-input">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" value="{{ candidate.name }}">
+
+                    
+                    <label for="position">Position:</label>
+                    <select id="position" name="position">
+                        <option value="President">President</option>
+                        <option value="Vice President">Vice President</option>
+                        <option value="Secretary">Secretary</option>
+                        <option value="Treasurer">Treasurer</option>
+                        <option value="Public Relations Officer">Public Relations Officer (PRO)</option>
+                    </select>
+                </div>
+
+                <div class="update-cancel-btn">
+                    <button type="submit" name="submit" class="update-btn">Update Candidate</button>
+                    <button class="cancel-btn"><a href="{{ url_for('manage_candidates') }}">Cancel</a></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

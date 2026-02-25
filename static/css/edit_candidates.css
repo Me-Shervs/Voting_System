@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins;
+}
+
+body {
+    background-color: #fff;
+}
+
+.topbar {
+    position: fixed;
+    background-color: #fff;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 60px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    z-index: 99;
+}
+
+.logo h2 {
+    color: #001F3F;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+.sidebar{
+    position: fixed;
+    top: 60px;
+    width: 250px;
+    height: calc(100% - 60px);
+    background-color: #001F3F;
+    overflow-x: hidden;
+}
+
+.sidebar ul{
+    margin-top: 20px;
+}
+
+.sidebar ul li{
+    width: 100%;
+    list-style-type: none;
+}
+
+.sidebar ul li a{
+    width: 100%;
+    text-decoration: none;
+    color: #fff;    
+    height: 60px;
+    display: flex;
+    align-items: center;
+    transition: all ease 0.3s;
+}
+
+.sidebar ul li:nth-child(5){
+    position: absolute;
+    bottom: 10px;
+}
+
+.sidebar ul li a i{
+    min-width: 60px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.sidebar ul li a:hover{
+    background-color: #fff;
+    color: #001F3F;
+    border-radius: 40px;
+    margin-left: 50px;
+}
+
+.main {
+    position: absolute;
+    top: 60px;
+    width: calc(100% - 250px);
+    left: 250px;
+    min-height: calc(100vh - 600px);
+    padding: 20px 30px;
+}
+
+.main h1 {
+    color: #3A6D8C;
+    text-align: center;
+    margin-bottom: 2rem;    
+    font-weight: 600;
+    font-size: 1.9rem;
+}
+
+.edit-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #001F3F;
+    width: 45%;
+    margin: auto;
+    padding: 30px;
+    border-radius: 5px;
+}
+
+.edit-container img {
+    border-radius: 50px;
+    margin-bottom: 2rem;
+}
+
+input[type="file"] {
+    display: none;
+    width: 100%;
+}
+
+.upload-container label {
+    display: inline-block;
+    background-color: #3A6D8C;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.upload-container i {
+    margin-right: 10px;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-form .text-input {
+    position: relative;
+    width: 70%;
+}
+
+.edit-form .text-input input {
+    width: 100%;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    margin-bottom: 1rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.update-cancel-btn {
+    display: flex;
+    gap: 15px;
+}
+
+.update-cancel-btn button {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.9rem;
+}
+
+.update-btn {
+    background-color: #3A6D8C;
+    color: #fff;
+}
+
+.cancel-btn {
+    background-color: #666;
+}
+
+.cancel-btn a {
+    color: #1E1E1E;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+@media (max-width: 739px) {
+    .action-btn {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 1115px) {
+.sidebar {
+        width: 60px;
+}
+
+.main {
+    left: 60px; 
+    width: calc(100% - 60px);
+}
+
+}

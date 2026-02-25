@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin View Votes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="/static/css/admin_votes.css">
+</head>
+<body>
+        <div class="topbar">
+            <div class="logo">
+                <h2>Voting System</h2>
+            </div>
+        </div>
+        <div class="sidebar"> 
+            <ul>
+                {% if 'admin' in session %}
+                    <li>
+                        <a href="{{ url_for('dashboard') }}">
+                            <i class="fas fa-th-large"></i>
+                            <div>Dashboard</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_votes') }}">
+                            <i class="fa-solid fa-check-to-slot"></i>
+                            <div>Votes</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('manage_candidates') }}">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <div>Candidates</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_settings') }}">
+                            <i class="fas fa-cog"></i>
+                            <div>Admin Settings</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('admin_logout') }}">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <div>Logout</div>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_login') }}">Admin Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        
+        <div class="main">
+            <h1>View Votes</h1>
+            <div class="vote-filter-container"> 
+                <div class="vote-actions">
+                    <button class="export-btn"><i class="fa-solid fa-file-export"></i><a href="{{ url_for('export_votes') }}">Export to Excel</a></button>
+                    <form action="{{ url_for('delete_all_votes') }}" method="POST">
+                        <button type="submit" class="delete-btn" onclick="return confirm('Are you sure want to delete all votes?');"><i class="fa-solid fa-trash"></i>Delete All Votes</button>
+                    </form>
+                    <button class="settings-btn"><i class="fa-solid fa-gear"></i><a href="{{ url_for('admin_settings') }}">Settings</a></button>
+                </div>
+
+                <div class="vote-search">
+                    <form method="GET" action="/admin/votes">
+                        <input type="text" name="user_id" id="user_id" placeholder="Enter User ID">
+                        <button type="submit" class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+            </div>
+
+        <table class="vote-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Position</th>
+                    <th>Candidate Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vote in votes %}
+                <tr>
+                    <td>{{ vote.id }}</td>
+                    <td>{{ vote.user_id }}</td>
+                    <td>{{ vote.position }}</td>
+                    <td>{{ vote.candidate_name }}</td>
+                </tr>
+                {% endfor %}      
+            </tbody>
+        </table>
+        </div>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vote</title>
+    <link rel="stylesheet" href="../static/css/vote_pres.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="vote-container">
+        <div class="ces-logo">
+            <img src="../static/uploads/ces-logo.png" alt="ces logo">
+        </div>
+        <div class="submitted-id">
+            <h1>Submitted ID</h1>
+            <p id="display-id"></p>
+        </div>
+
+        <form id="candidate-form">
+            <h1>Candidate Selection</h1>
+
+            {% for position, candidates in candidates_by_position.items() %}
+            <div class="position-group" data-position="{{ position }}">
+                <h2>{{ position }}</h2> 
+                <div class="flex-direction">
+                    {% if candidates %}
+                        {% for candidate in candidates %}
+                        <div class="candidate-slider">
+                            <div class="candidate-card">
+                                {% if candidate.image_base64 %}
+                                    <img src="data:image/{{ candidate.nimetype }};base64,{{ candidate.image_base64 }}" alt="{{ candidate.name }}" />
+                                {% else %}
+                                    <p>No image</p>
+                                {% endif %}
+                                <h3>{{ candidate.name }}</h3>
+                                <input type="radio" name="{{ position }}" value="{{ candidate.name }}" />
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No candidates available for this position.</p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+
+            <div class="navigation-buttons">
+                <button type="button" id="prev-button" class="nav-btn">Previous</button>
+                <button type="button" id="next-button" class="nav-btn">Next</button>
+                <button type="button" id="review-button" class="review-btn">Review Selections</button>
+            </div>
+        </form>
+
+        <div class="floating-section" id="review-section">
+            <h2>Review Your Selections</h2>
+            <ul id="selection-list"></ul>
+            <button id="submit-button" class="submit-btn">Submit</button>
+            <button id="cancel-button" class="cancel-btn">Cancel</button>
+        </div>
+    </div>
+
+    <script src="../static/js/vote-press-nxt-prv.js"></script>
+</body>
+</html>

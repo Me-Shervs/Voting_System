@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Admin Settings</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" type="text/css" href="/static/css/admin_settings.css">
+</head>
+<body>
+    <div class="topbar">
+        <div class="logo">
+            <h2>Voting System</h2>
+    </div>
+
+    <div class="sidebar"> 
+        <ul>
+            {% if 'admin' in session %}
+                <li>
+                    <a href="{{ url_for('dashboard') }}">
+                        <i class="fas fa-th-large"></i>
+                        <div>Dashboard</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_votes') }}">
+                        <i class="fa-solid fa-check-to-slot"></i>
+                        <div>Votes</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('manage_candidates') }}">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <div>Candidates</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_settings') }}">
+                        <i class="fas fa-cog"></i>
+                        <div>Admin Settings</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_logout') }}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <div>Logout</div>
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_login') }}">Admin Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+
+    <div class="main">
+        <!-- Flash Messages Updated Version 4.2 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>Admin Settings</h1>
+        <div class="container">
+            <form method="POST" class="card">
+                <div class="input-group">
+                    <label for="username">New Username</label>
+                    <input type="text" name="username" id="username" value="{{ admin.username }}" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="old_password">Current Password</label>
+                    <input type="password" name="old_password" id="old_password" required>
+                </div>
+            
+                <div class="input-group">
+                    <label for="password">New Password</label>
+                    <input type="password" name="password" id="password" required>
+                </div>
+            
+                <div class="input-group">
+                    <label for="confirm_password">Confirm New Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password" required>
+                </div>
+            
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Update Settings</button>
+                    <button class="cancel-btn"><a href="{{ url_for('admin_votes') }}">Cancel</a></button>
+                </div>
+            </form>
+        </div>
+        <a href="{{ url_for('security_log') }}">View Security Logs</a>
+    </div>
+</body>
+</html>

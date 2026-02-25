@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Security Logs</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/security_log.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="topbar">
+        <div class="logo">
+            <h2>Voting System</h2>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <p class="{{ category }}">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="sidebar"> 
+        <ul>
+            {% if 'admin' in session %}
+                <li>
+                    <a href="{{ url_for('dashboard') }}">
+                        <i class="fas fa-th-large"></i>
+                        <div>Dashboard</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_votes') }}">
+                        <i class="fa-solid fa-check-to-slot"></i>
+                        <div>Votes</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('manage_candidates') }}">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <div>Candidates</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_settings') }}">
+                        <i class="fas fa-cog"></i>
+                        <div>Admin Settings</div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('admin_logout') }}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <div>Logout</div>
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('admin_login') }}">Admin Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    
+    <div class="main">
+        <h1>Security Log</h1>
+        <div class="export-btn">
+            <button><i class="fa-solid fa-file-export"></i><a href="{{ url_for('export_logs') }}">Export to Excel</a></button>
+        </div>
+        <table class="log-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Action</th>
+                    <th>IP Address</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for log in logs %}
+                <tr>
+                    <td>{{ log.id }}</td>
+                    <td>{{ log.admin_username }}</td>
+                    <td>{{ log.action }}</td>
+                    <td>{{ log.ip_address }}</td>
+                    <td>{{ log.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

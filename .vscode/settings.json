@@ -1,0 +1,19 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "voting_system_one",
+            "database": "voting_system_one",
+            "username": "root",
+            "askForPassword": true
+        }
+    ],
+    "liveServer.settings.port": 5501
+}
