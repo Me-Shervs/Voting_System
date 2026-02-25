@@ -449,8 +449,8 @@ def export_logs():
 
     return send_file(output, download_name='security_logs.xlsx', as_attachment=True)
 
-# if __name__ == '__main__':
-#     create_tables()
-#     app.run(host="0.0.0.0", port=5000) #! ssl_context=('cert.pem', 'key.pem') remove for now for production
+if __name__ == '__main__':
+    create_tables()
+    app.run(host="0.0.0.0", port=5000) #! ssl_context=('cert.pem', 'key.pem') remove for now for production
 
 # FIXME: pip install -r requirements.txt
