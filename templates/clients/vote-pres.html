@@ -29,7 +29,7 @@
                         <div class="candidate-slider">
                             <div class="candidate-card">
                                 {% if candidate.image_base64 %}
-                                    <img src="data:image/{{ candidate.nimetype }};base64,{{ candidate.image_base64 }}" alt="{{ candidate.name }}" />
+                                    <img src="data:{{ candidate.nimetype }};base64,{{ candidate.image_base64 }}" alt="{{ candidate.name }}" />
                                 {% else %}
                                     <p>No image</p>
                                 {% endif %}

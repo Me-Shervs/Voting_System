@@ -32,13 +32,6 @@ db = SQLAlchemy(app)
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-FERNET_KEY = os.environ.get("FERNET_KEY")
-
-if not FERNET_KEY:
-    raise ValueError("FERNET_KEY is not set in environment variables")
-
-cipher = Fernet(FERNET_KEY.encode())
-
 def encrypt_data(data):
     return cipher.encrypt(data.encode()).decode()  # Convert to bytes, encrypt, then back to string
 
@@ -326,6 +319,9 @@ def dashboard():
 
 @app.route('/candidates', methods=['GET', 'POST']) # * updated
 def manage_candidates():
+    if 'admin' not in session:
+        flash('Please log in first', 'warning')
+        return redirect(url_for('admin_login'))
     if request.method == 'POST':
         position = request.form['position']
         name = request.form['name']
@@ -449,8 +445,8 @@ def export_logs():
 
     return send_file(output, download_name='security_logs.xlsx', as_attachment=True)
 
-if __name__ == '__main__':
-    create_tables()
-    # app.run(host="0.0.0.0", port=5000) #! ssl_context=('cert.pem', 'key.pem') remove for now for production
+#if __name__ == '__main__':
+#    create_tables()
+#    app.run(host="0.0.0.0", port=5000) #! ssl_context=('cert.pem', 'key.pem') remove for now for production
 
 # FIXME: pip install -r requirements.txt
